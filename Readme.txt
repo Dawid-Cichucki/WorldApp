@@ -10,3 +10,5 @@ Example  GET- http:/localhost:8080/BHR should return:
 
 
 uses this database https://github.com/ghusta/docker-postgres-world-db
+
+Java8, Spring, PostgreSQL, Maven, Mockito, JUnit
