@@ -9,6 +9,7 @@ import world.repositories.CountryLanguageRepository;
 import world.repositories.CountryRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class CountryServiceTest {
 
@@ -28,8 +29,11 @@ class CountryServiceTest {
 
     @Test
     void getCountry() {
+     //   when(countryRepository.findById("ahr")).thenThrow(InvalidCountryCode.class);
+
         assertThrows(InvalidCountryCode.class,()->{
             countryService.getCountry("ahr");
         });
     }
+
 }

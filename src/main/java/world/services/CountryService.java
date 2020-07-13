@@ -13,6 +13,7 @@ import world.repositories.CountryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CountryService {
@@ -26,7 +27,7 @@ public class CountryService {
         this.countryLanguageRepository = countryLanguageRepository;
     }
 
-    public CountryAndLanguageDTO getCountry(String code){
+    public CountryAndLanguageDTO getCountry(String code) {
 
         Optional<Country> countryOptional = countryRepository.findById(code);
         if (!countryOptional.isPresent()) {
@@ -34,13 +35,12 @@ public class CountryService {
         }
         Country country = countryOptional.get();
 
-        List<String> countryLanguageList = new ArrayList<>();
-        for (CountryLanguage countryLanguage : countryLanguageRepository.findAll()) {
-            if (countryLanguage.getCountryCode().getCode().equals(code)) {
-                System.out.println(countryLanguage.getCountryCode());
-                countryLanguageList.add(countryLanguage.getLanguage());
-            }
-        }
+        List<String> countryLanguageList;
+
+        countryLanguageList = countryLanguageRepository.findByCountryCode(country)
+                .stream()
+                .map(CountryLanguage::getLanguage)
+                .collect(Collectors.toList());
 
         CountryAndLanguageDTO countryAndLanguageDTO = new CountryAndLanguageDTO(
                 country.getName(),
